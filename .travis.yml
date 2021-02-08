@@ -10,9 +10,23 @@ install:
 - pip install .
 script:
 - pytest
-deploy:
-  provider: pypi
-  username: __token__
-  server: https://test.pypi.org/legacy/ # Remove for deployment to official PyPi repo
-  password:
-    secure: bpeUIAikjxR2OjA4XFBFutL56nU2999/EfND2ss96q/3TAKhKUGFBVpOY1HlntIzP/lIxxSrwHuVWwqT5WruEJFszzffm+E/0KNzH9W+xdfEb2RhZ3baqehjEtl/Bi5QpiSX7PFdA7KiwFDHCHPclz3SJfwsjbhkBNkwj3Y4rFhe0VHbAwgtrx0qAveDbYU1sqFVyVkhRS2gqEIlmL11QTaqmRWz2XNbcyzV3J03gra6Az2TkpqNQ7LCYTGkahcoppguJ2rQxVmW1htSDgbrfANh6VBeIMvytChX5IqI3fzpsrsIMBeG6Duhnp+8oIszkNo9pIYQ6GR6TzqAUCcYtK23j04PNku34s4lXHE9cDZ/RVs2L6IxUc8i20jjXmUk0Qwm8PHhk68EByO3rwWmCi6oSEIjn9e1EzPdbJTwHuc8d9nDynVnxFbqsPpcVt91p/GSAjIC6GSIib0rIh4tWIbi0Ndp4xEw46YiL+KR0dXW0hdTc7osu71C60SfnzGFWwp2TPtmnOEy4Egp4+PniV9DA/JBiqcwZqaY3svyd6N0oNc/5YvRbwHTSda45TCmaL7NjP/jR1DPBEY4YVGaFzL2ABAZqnlrWvM/CbceRs1UdAlfz9EiyAQojGP1tAAbc4VSiM2FBf04r62+1MZCdWXN25j1Geb2gCpl8/RJFjA=
+stages:
+  - test
+  - deploy
+jobs:
+  include:
+    - stage: deploy
+      python: 3.6
+      install: skip
+      script: skip
+      deploy:
+        provider: pypi
+        skip_cleanup: true
+        distributions: "sdist bdist_egg bdist_wheel"
+        on:
+          tags: true
+          branch: master         
+        username: __token__
+        password:
+          secure: bpeUIAikjxR2OjA4XFBFutL56nU2999/EfND2ss96q/3TAKhKUGFBVpOY1HlntIzP/lIxxSrwHuVWwqT5WruEJFszzffm+E/0KNzH9W+xdfEb2RhZ3baqehjEtl/Bi5QpiSX7PFdA7KiwFDHCHPclz3SJfwsjbhkBNkwj3Y4rFhe0VHbAwgtrx0qAveDbYU1sqFVyVkhRS2gqEIlmL11QTaqmRWz2XNbcyzV3J03gra6Az2TkpqNQ7LCYTGkahcoppguJ2rQxVmW1htSDgbrfANh6VBeIMvytChX5IqI3fzpsrsIMBeG6Duhnp+8oIszkNo9pIYQ6GR6TzqAUCcYtK23j04PNku34s4lXHE9cDZ/RVs2L6IxUc8i20jjXmUk0Qwm8PHhk68EByO3rwWmCi6oSEIjn9e1EzPdbJTwHuc8d9nDynVnxFbqsPpcVt91p/GSAjIC6GSIib0rIh4tWIbi0Ndp4xEw46YiL+KR0dXW0hdTc7osu71C60SfnzGFWwp2TPtmnOEy4Egp4+PniV9DA/JBiqcwZqaY3svyd6N0oNc/5YvRbwHTSda45TCmaL7NjP/jR1DPBEY4YVGaFzL2ABAZqnlrWvM/CbceRs1UdAlfz9EiyAQojGP1tAAbc4VSiM2FBf04r62+1MZCdWXN25j1Geb2gCpl8/RJFjA=
+
