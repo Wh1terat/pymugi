@@ -49,7 +49,7 @@ class Mugi():
     def __init__(self, k, i):
         if type(k) not in (bytes, bytearray):
             raise TypeError(f'Invalid Key: Key should be bytes not {type(k)}')
-        if type(k) not in (bytes, bytearray):
+        if type(i) not in (bytes, bytearray):
             raise TypeError(f'Invalid IV: IV should be bytes not {type(i)}')
         if len(k) != 16:
             raise ValueError('Invalid Key: Key should be 16 bytes long')
