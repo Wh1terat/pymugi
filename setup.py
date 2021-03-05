@@ -8,7 +8,7 @@ with open(path.join(here, "README.md"), encoding="utf-8") as f:
 
 setup(
     name="pymugi",
-    version="0.1.1",
+    version="0.1.2",
     packages=["pymugi"],
     author="Gareth Bryan",
     author_email="gareth@mx9.org",
