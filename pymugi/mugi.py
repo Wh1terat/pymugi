@@ -133,3 +133,17 @@ class Mugi():
         while True:
             yield self.a[2]
             self.update()
+
+
+    def crypt(self, data):
+        if type(data) not in (bytes, bytearray):
+            raise TypeError(f'Invalid Data: Data should be bytes-like object, not {type(data)}')
+        out = bytearray()
+        key = self.prng()
+        for chunk in (data[i:i+8] for i in range(0, len(data), 8)):
+            if len(chunk) < 8:
+                out.extend(bytes(a ^ b for (a, b) in zip(chunk, next(key).to_bytes(8,'big'))))
+            else:
+                out.extend((int.from_bytes(chunk,'big') ^ next(key)).to_bytes(8,'big'))
+        return out
+
